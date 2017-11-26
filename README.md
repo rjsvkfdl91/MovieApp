@@ -20,9 +20,7 @@ I used TMDB API to retrieve movies. You must use your own API key in order to bu
 
 <img src="Detail 3.png" width="300"> <img src="Detail 4.png" width="300"> <br>
 
-<img src="Detail 3.png" width="300"> <img src="Detail 4.png" width="300"> <br>
-
- <br>
+<br>
 
 ## Error handling (According to the Internet Connection)
 
