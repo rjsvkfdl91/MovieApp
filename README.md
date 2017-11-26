@@ -36,4 +36,6 @@ I used TMDB API to retrieve movies. You must use your own API key in order to bu
   <li>YoutubePlayerApi(for trailer)</li>
 </ul>
 
+## More Work
+I am currently working on adding Login/out function...
 
