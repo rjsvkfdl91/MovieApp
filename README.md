@@ -10,7 +10,7 @@ This app uses TMDB API to retrieve movies. You must use your own API key in orde
 
 ## Error handling
 
-<img src="error1.png" width="150"> <img src="error2.png" width="150">
+<img src="error1.png" width="300"> <img src="error2.png" width="300">
 
 ## Libraries
 <ul>
