@@ -8,6 +8,9 @@ This app uses TMDB API to retrieve movies. You must use your own API key in orde
 
 ## ScreenShots
 
+<img src="main.png" width="150"> <img src="Navigation.png" width="150"> <br>
+<img src="detail1.png" width="150"> <img src="detail2.png" width="150">
+
 ## Error handling
 
 <img src="error1.png" width="300"> <img src="error2.png" width="300">
