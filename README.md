@@ -12,7 +12,7 @@ I used TMDB API to retrieve movies. You must use your own API key in order to bu
 
 ## ScreenShots
 
-<img src="main.png" width="150"> <img src="Playing movies.png" width="150"> <img src="Upcoming Movies.png" width="150"> <br>
+<img src="main.png" width="250"> <img src="Playing movies.png" width="250"> <img src="Upcoming Movies.png" width="250"> <br>
 
 <img src="When searching.png" width="300"> <img src="Search Result.png" width="300"> <br>
 
