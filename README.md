@@ -8,6 +8,7 @@ I used TMDB API to retrieve movies. You must use your own API key in order to bu
 * Sort movies by popularity, rating, current playing and upcoming 
 * View a particular movie detail
 * View movie trailers through youtube
+* Pagination (Endless Scrolling or Infinite Scrolling) that breaks down a list of content into equal smaller pieces, loaded one at a time.
 
 ## ScreenShots
 
