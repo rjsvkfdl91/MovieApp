@@ -8,6 +8,8 @@ This app uses TMDB API to retrieve movies. You must use your own API key in orde
 
 ## ScreenShots
 
+## Error handlings according to the network connection
+
 ## Libraries
 <ul>
   <li>Retrofit</li>
@@ -15,4 +17,7 @@ This app uses TMDB API to retrieve movies. You must use your own API key in orde
   <li>Picasso</li>
   <li>Kenbursview</li>
   <li>MaterialSearchView</li>
+  <li>YoutubePlayerApi(for trailer)</li>
 </ul>
+
+
