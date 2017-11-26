@@ -1,21 +1,25 @@
 # MovieApp
 
-This is a MovieApp I made from scratch.
+This is a MovieApp that I made from scratch and allows users to discover list of movies.
+I used TMDB API to retrieve movies. You must use your own API key in order to build the app. 
 
-## How to work with the Source
+# Features
 
-This app uses TMDB API to retrieve movies. You must use your own API key in order to build the app. 
+* Sort movies by popularity, rating, current playing and upcoming 
+* View a particular movie detail
+* View movie trailers through youtube
 
 ## ScreenShots
 
-<img src="main.png" width="150"> <img src="Navigation.png" width="150"> <br/>
-<img src="detail1.png" width="150"> <img src="detail2.png" width="150">
+<img src="main.png" width="300"> <img src="Navigation.png" width="300"> <br>
+
+<img src="main.png" width="300"> <img src="Navigation.png" width="300">
 
 ## Error handling
 
 <img src="error1.png" width="300"> <img src="error2.png" width="300">
 
-## Libraries
+## Libraries Used 
 <ul>
   <li>Retrofit</li>
   <li>GSON</li>
