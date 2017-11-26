@@ -1,25 +1,18 @@
 package com.example.s522050.movieapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.s522050.movieapp.Adapter.MovieListAdapter;
 import com.example.s522050.movieapp.Common.Common;
@@ -29,7 +22,6 @@ import com.example.s522050.movieapp.Inteface.MovieService;
 import com.example.s522050.movieapp.Inteface.RetryClickListener;
 import com.example.s522050.movieapp.Model.Movie;
 import com.example.s522050.movieapp.Model.MovieList;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -38,23 +30,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements RetryClickListener{
+public class TopMovieActivity extends AppCompatActivity implements RetryClickListener {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    private MaterialSearchView mSearchView;
     private ProgressBar progressBar;
     private RecyclerView mListMovie;
     private LinearLayout error_layout;
+    private AppBarLayout main_appbar_layout;
     private Button retry_btn;
     private TextView error_text;
     private LinearLayoutManager linearLayoutManager;
     private MovieService mMovieService;
     private MovieListAdapter mAdapter;
     private Toolbar mMainToolBar;
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
-    private ActionBarDrawerToggle mDrawableToggle;
 
     // Settings for pagination
     private static final int PAGE_START = 1;
@@ -62,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
     private boolean isLastPage = false;
     private int TOTAL_PAGES = 15;
     private int currentPage = PAGE_START;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,47 +60,15 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
         //Setting toolbar
         mMainToolBar = findViewById(R.id.main_toolBar);
         setSupportActionBar(mMainToolBar);
-        getSupportActionBar().setTitle("Popular Movies");
-
-        //Setting DrawerLayout
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        mNavigationView = findViewById(R.id.navigation_view);
-        mDrawableToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mMainToolBar, R.string.drawer_open, R.string.drawer_close);
-        mDrawerLayout.addDrawerListener(mDrawableToggle);
-        mDrawableToggle.syncState();
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                int id = item.getItemId();
-                switch (id) {
-                    case R.id.navigation_top_rated_movie:
-                        Intent topIntent = new Intent(MainActivity.this,TopMovieActivity.class);
-                        startActivity(topIntent);
-                        break;
-                    case R.id.navigation_playing_movie:
-                        Intent playingIntent = new Intent(MainActivity.this,PlayingMovieActivity.class);
-                        startActivity(playingIntent);
-                        break;
-
-                    case R.id.navigation_upcoming_movie:
-                        Intent upcomingIntent = new Intent(MainActivity.this,UpcomingMovieActivity.class);
-                        startActivity(upcomingIntent);
-                        break;
-                    case R.id.navigation_sign_out:
-                        Toast.makeText(MainActivity.this, "Sign out!!!", Toast.LENGTH_SHORT).show();
-                }
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Top Rated Movies");
 
         //Init Service
         mMovieService = Common.getMovieService();
 
         //Init Views
         progressBar = findViewById(R.id.main_progress);
-//        main_appbar_layout = findViewById(R.id.app_bar);
+        main_appbar_layout = findViewById(R.id.app_bar);
         error_layout = findViewById(R.id.error_layout);
         error_text = findViewById(R.id.error_txt_cause);
         retry_btn = findViewById(R.id.error_btn_retry);
@@ -134,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loadPopularNextPage();
+                        loadTopNextPage();
                     }
                 },1000);
             }
@@ -155,53 +111,26 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
             }
         });
 
-
-        loadPopularFirstPage();
+        loadTopFirstPage();
 
         retry_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadPopularFirstPage();
-            }
-        });
-
-        mSearchView = findViewById(R.id.searchView);
-        mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Intent searchIntent = new Intent(MainActivity.this,SearchActivity.class);
-                searchIntent.putExtra("searchQuery",query);
-                startActivity(searchIntent);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+                loadTopFirstPage();
             }
         });
     }
 
-    // To uncheck navigation menu item when return to the MainActivity
-    @Override
-    protected void onResume() {
-        int size = mNavigationView.getMenu().size();
-        for (int i = 0; i < size; i++) {
-            mNavigationView.getMenu().getItem(i).setChecked(false);
-        }
-        super.onResume();
-    }
-
-    private void loadPopularFirstPage() {
+    private void loadTopFirstPage() {
 
         hideErrorView();
 
-        mMovieService.getPopularLists(currentPage, Common.API_KEY).enqueue(new Callback<MovieList>() {
+        mMovieService.getTopRatedLists(currentPage, Common.API_KEY).enqueue(new Callback<MovieList>() {
             @Override
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
 
                 progressBar.setVisibility(View.GONE);
-//                main_appbar_layout.setVisibility(View.VISIBLE);
+                main_appbar_layout.setVisibility(View.VISIBLE);
 
                 List<Movie> movieList = response.body().getResults();
                 mAdapter.addAll(movieList);
@@ -221,9 +150,9 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
 
     }
 
-    private void loadPopularNextPage() {
+    private void loadTopNextPage() {
 
-        mMovieService.getPopularLists(currentPage, Common.API_KEY).enqueue(new Callback<MovieList>() {
+        mMovieService.getTopRatedLists(currentPage, Common.API_KEY).enqueue(new Callback<MovieList>() {
             @Override
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
 
@@ -250,24 +179,21 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
     // Retry Listener interface call back
     @Override
     public void retryPageLoad() {
-        loadPopularNextPage();
+        loadTopNextPage();
     }
 
     private void hideErrorView() {
         error_layout.setVisibility(View.INVISIBLE);
-//        main_appbar_layout.setVisibility(View.INVISIBLE);
+        main_appbar_layout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
-        mDrawerLayout.setVisibility(View.VISIBLE);
     }
 
     private void showErrorView(Throwable throwable){
 
         //Show error message depending on the situation
         progressBar.setVisibility(View.GONE);
-//        main_appbar_layout.setVisibility(View.INVISIBLE);
+        main_appbar_layout.setVisibility(View.INVISIBLE);
         error_layout.setVisibility(View.VISIBLE);
-        mDrawerLayout.setVisibility(View.INVISIBLE);
-
         error_text.setText(fetchErrorMessage(throwable));
     }
 
@@ -280,32 +206,5 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
             errorMsg = getString(R.string.error_msg_timeout);
         }
         return errorMsg;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.movie_detail_menu,menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        mSearchView.setMenuItem(item);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawableToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    // close searchView when it is open
-    @Override
-    public void onBackPressed() {
-        if (mSearchView.isSearchOpen()) {
-            mSearchView.closeSearch();
-        } else {
-            super.onBackPressed();
-        }
     }
 }

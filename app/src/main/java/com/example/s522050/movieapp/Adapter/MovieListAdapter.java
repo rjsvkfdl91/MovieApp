@@ -3,10 +3,12 @@ package com.example.s522050.movieapp.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,6 +40,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private Context context;
     private List<Movie> movieList;
+
 
     public MovieListAdapter(Context context) {
         this.context = context;
@@ -75,7 +78,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 movieHolder.movie_title.setText(movie.getTitle());
                 movieHolder.movie_release_date.setText(movie.getRelease_date());
-//                movieHolder.movie_average_vote.setText(String.valueOf(movie.getVote_average()));
+                movieHolder.movie_average_vote.setText(String.valueOf(movie.getVote_average()));
+                movieHolder.movie_overview.setText(movie.getOverview());
                 Picasso.with(context).load(movie.getPoster_path())
                         .fit()
                         .placeholder(R.mipmap.ic_launcher)
@@ -174,6 +178,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView movie_title;
         TextView movie_release_date;
         TextView movie_average_vote;
+        TextView movie_overview;
         ImageView movie_poster;
 
 
@@ -183,6 +188,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             movie_title = itemView.findViewById(R.id.movie_title);
             movie_release_date = itemView.findViewById(R.id.release_date);
             movie_average_vote = itemView.findViewById(R.id.average_vote);
+            movie_overview = itemView.findViewById(R.id.movie_overview);
             movie_poster = itemView.findViewById(R.id.poster_image);
 
             itemView.setOnClickListener(this);

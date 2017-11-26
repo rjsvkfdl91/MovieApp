@@ -6,40 +6,76 @@
     android:layout_width="match_parent"
     android:layout_height="250dp"
     card_view:cardElevation="7dp"
+    android:layout_marginBottom="5dp"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/poster_image"
-            android:layout_width="match_parent"
+            android:layout_width="170dp"
             android:layout_height="match_parent"
             tools:src="@drawable/download_image"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:contentDescription="@null" />
 
-        <TextView
-            android:id="@+id/release_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center_horizontal"
-            tools:text="Release Date"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/cardview_margin">
 
-        <TextView
-            android:id="@+id/movie_title"
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center_vertical|center"
-            android:textStyle="bold"
-            tools:text="Title" />
+            <TextView
+                android:id="@+id/release_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="end|center_vertical"
+                android:textColor="@color/placeholder_grey"
+                tools:text="2017-09-05" />
 
-    </FrameLayout>
+            <TextView
+                android:id="@+id/movie_title"
+                android:layout_below="@+id/release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/movie_overview"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/movie_title"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:paddingTop="10dp"
+                android:textSize="@dimen/overview_text_size"
+                tools:text="Thor is imprisoned on the other side of the universe and finds himself in a race against time to get back to Asgard to stop Ragnarok, the destruction of his homeworld and the end of Asgardian civilization, at the hands of an all-powerful new threat, the ruthless Hela." />
+
+            <TextView
+                android:id="@+id/average_vote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/ic_rate"
+                android:drawableStart="@drawable/ic_rate"
+                android:fontFamily="sans-serif-medium"
+                tools:text="7.5" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

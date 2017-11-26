@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="detail_padding">10dp</dimen>
     <dimen name="activity_margin">16dp</dimen>
+    <dimen name="drawer_width">200dp</dimen>
+    <dimen name="overview_text_size">13sp</dimen>
+
+    <dimen name="youtube_view_width">200dp</dimen>
+    <dimen name="youtube_view_height">200dp</dimen>
+    <dimen name="youtube_view_margin">10dp</dimen>
+    <dimen name="no_trailer_message_margin">100dp</dimen>
+
+    <!--for retry button image-->
+    <dimen name="cardview_margin">10dp</dimen>
     <dimen name="activity_margin_half">8dp</dimen>
     <dimen name="activity_margin_quarter">4dp</dimen>
     <dimen name="activity_margin_content">24dp</dimen>
