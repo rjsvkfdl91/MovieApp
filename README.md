@@ -39,5 +39,5 @@ I used TMDB API to retrieve movies. You must use your own API key in order to bu
 </ul>
 
 ## More Work
-I am currently working on adding Login/out function...
+I am currently working on Social login function (Google and Kakao)...
 
