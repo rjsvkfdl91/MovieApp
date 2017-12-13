@@ -48,4 +48,23 @@
     <string name="no_trailer_message">No Trailer</string>
     <string name="enter_the_title">Search title i.e. \"Spider man\"</string>
 
+    <!-- Login Labels -->
+
+    <string name="new_account_label">NEED A NEW ACCOUNT?</string>
+    <string name="email">Email…</string>
+    <string name="display_name">Name</string>
+    <string name="password">Password…</string>
+    <string name="log_out_menu_label">Log Out</string>
+    <string name="create_account">CREATE</string>
+    <string name="email_login">Email…</string>
+    <string name="login_to_your_account">Login to your Account</string>
+    <string name="login">LOGIN</string>
+    <string name="already_have_account">ALREADY HAVE ACCOUNT</string>
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
+    <string name="register">CREATE</string>
+    <string name="create_a_new_account">Create a New Account</string>
+    <string name="sign_in_label">Signed in as</string>
+    <string name="or_login_with">or login with</string>
+
 </resources>

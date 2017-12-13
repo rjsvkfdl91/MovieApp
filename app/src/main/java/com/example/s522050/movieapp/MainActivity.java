@@ -29,6 +29,14 @@ import com.example.s522050.movieapp.Inteface.MovieService;
 import com.example.s522050.movieapp.Inteface.RetryClickListener;
 import com.example.s522050.movieapp.Model.Movie;
 import com.example.s522050.movieapp.Model.MovieList;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.List;
@@ -47,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
     private RecyclerView mListMovie;
     private LinearLayout error_layout;
     private Button retry_btn;
-    private TextView error_text;
+    private TextView error_text,user_name_text;
     private LinearLayoutManager linearLayoutManager;
     private MovieService mMovieService;
     private MovieListAdapter mAdapter;
@@ -63,16 +71,23 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
     private int TOTAL_PAGES = 15;
     private int currentPage = PAGE_START;
 
+    //FireBase Auth
+    private FirebaseAuth mAuth;
+    private DatabaseReference mUserDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Initializing auth
+        mAuth = FirebaseAuth.getInstance();
+
         //Setting toolbar
         mMainToolBar = findViewById(R.id.main_toolBar);
         setSupportActionBar(mMainToolBar);
         getSupportActionBar().setTitle("Popular Movies");
+
 
         //Setting DrawerLayout
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -100,7 +115,10 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
                         startActivity(upcomingIntent);
                         break;
                     case R.id.navigation_sign_out:
-                        Toast.makeText(MainActivity.this, "Sign out!!!", Toast.LENGTH_SHORT).show();
+                        // This is a code to log out
+                        FirebaseAuth.getInstance().signOut();
+                        //If user log out, return to start page
+                        sentToStart();
                 }
                 mDrawerLayout.closeDrawers();
                 return true;
@@ -112,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
 
         //Init Views
         progressBar = findViewById(R.id.main_progress);
-//        main_appbar_layout = findViewById(R.id.app_bar);
         error_layout = findViewById(R.id.error_layout);
         error_text = findViewById(R.id.error_txt_cause);
         retry_btn = findViewById(R.id.error_btn_retry);
@@ -180,6 +197,42 @@ public class MainActivity extends AppCompatActivity implements RetryClickListene
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Check whether user is signed in or not
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        //if user is null, back to start page
+        if(currentUser == null){
+            sentToStart();
+        }else{
+            //if user is not null, show user name through the navigation header
+            View headerView = mNavigationView.getHeaderView(0);
+            user_name_text = headerView.findViewById(R.id.user_name);
+            String current_uid = currentUser.getUid();
+            mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("name");
+            mUserDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String name = dataSnapshot.getValue().toString();
+                    user_name_text.setText(name);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+    private void sentToStart() {
+        Intent startIntent = new Intent(MainActivity.this,StartActivity.class);
+        startActivity(startIntent);
+        finish();
     }
 
     // To uncheck navigation menu item when return to the MainActivity
