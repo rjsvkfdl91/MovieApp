@@ -30,6 +30,7 @@ I used TMDB API to retrieve movies. You must use your own API key in order to bu
 
 ## Libraries Used 
 <ul>
+  <li>Firebase(Realtime Database for the sign up function)</li>
   <li>Retrofit</li>
   <li>GSON</li>
   <li>Picasso</li>
